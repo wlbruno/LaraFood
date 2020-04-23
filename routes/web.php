@@ -2,6 +2,7 @@
 
 Route::prefix('admin')
 		->namespace('Admin')
+		->middleware('auth')
 		->group(function() {
 
 	/**
@@ -79,3 +80,6 @@ Route::prefix('admin')
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
