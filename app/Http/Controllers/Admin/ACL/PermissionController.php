@@ -25,7 +25,7 @@ class PermissionController extends Controller
     {
         $permissions = $this->repository->paginate();
 
-        return view('admin.pages.permissions.index', compact('permissions'));    }
+        return view('admin.pages.permissions.index', compact('permissions'));    
 
     /**
      * Show the form for creating a new resource.
