@@ -90,7 +90,7 @@ Route::prefix('admin')
 });
 
 
-/**
+/**d
 *	Site
 */
 Route::get('/plan/{url}', 'Site\SiteController@plan')->name('plan.subscription');
