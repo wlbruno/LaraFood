@@ -1,21 +1,23 @@
 @extends('adminlte::page')
 
-@section('title', 'Permissões')
+@section('title', "Permissões do cargo {$role->name}")
 
 @section('content_header')
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('permissions.index') }}">Permissões</a></li>
+        <li class="breadcrumb-item active"><a href="{{ route('roles.index') }}">Cargo</a></li>
     </ol>
 
-    <h1>Permissões <a href="{{ route('permissions.create') }}" class="btn btn-dark"><i class="fas fa-plus-square"></i></a></h1>
+    <h1>Permissões do cargo <strong>{{$role->name}}</strong> </h1>
 
+    <a href="{{ route('roles.permissions.available', $role->id) }}" class="btn btn-dark">ADD NOVA PERMISSÃO</a>
+    
 @stop
 
 @section('content')
     <div class="card">
         <div class="card-header">
-        <form action="{{ route('permissions.search') }}" method="POST" class="form form-inline">
+        <form action="{{ route('roles.search') }}" method="POST" class="form form-inline">
             @csrf
             <input type="text" name="filter" placeholder="Filtrar" class="form-control" value="{{ $filters['filter'] ?? ''  }}">
             <button type="submit" class="btn btn-dark">Filtrar</button>
@@ -30,16 +32,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($permissions as $permissison)
+                    @foreach($permissions as $permission)
                         <tr>
                             <td>
-                                {{ $permissison->name }}
+                                {{ $permission->name }}
                             </td>
                          
                             <td style="width: 10px;">
-                                <a href="{{ route('permissions.edit', $permissison->id) }}" class="btn btn-info">Editar</a>
-                                <a href="{{ route('permissions.show', $permissison->id) }}" class="btn btn-warning">VER</a> 
-                                <a href="{{ route('permissions.profiles', $permissison->id) }}" class="btn btn-dark"><i class="fas fa-address-book"></i></a>     
+                                <a href="{{ route('roles.permissions.detach', [$role->id, $permission->id]) }}" class="btn btn-danger">DISVINCULAR</a> </a>   
                             </td>
                         </tr>
                     @endforeach    

@@ -258,6 +258,13 @@ return [
             'icon' => 'fas fa-tablet',
             'can'  => 'tables',
         ],
+
+        [
+            'text' => 'Cargos',
+            'url'  => 'admin/roles',
+            'icon' => 'fas fa-address-card',
+            'can'  => 'roles',
+        ],
     ],
 
     /*
