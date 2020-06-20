@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUpdatePlan;
+use Illuminate\Support\Facades\Gate;
 
 class PlanController extends Controller
 {
@@ -14,11 +15,15 @@ class PlanController extends Controller
     public function __construct(Plan $plan)
     {
         $this->repository = $plan;
+
+       // $this->middleware(['can:plan']);
     }
 
 
     public function index() 
     {
+        //Gate::allows('plan');
+        //$this->authorize('plan');
         $plans = $this->repository->latest()->paginate();
 
         return view('admin.pages.plans.index', [
