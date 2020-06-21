@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Tenant\Events\TenantCreated;
 
 class RegisterController extends Controller
 {
@@ -74,6 +75,8 @@ protected $redirectTo = '/admin';
 
         $tenantService = app(TenantService::class);
         $user = $tenantService->make($plan, $data);
+
+        event(new TenantCreated($user));
 
         return $user;
     }
