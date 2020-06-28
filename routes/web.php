@@ -6,6 +6,7 @@ Route::prefix('admin')
 		->group(function() {
 
 	/**
+	 * teste
      * Role x User
      */
     Route::get('users/{id}/role/{idRole}/detach', 'ACL\RoleUserController@detachRoleUser')->name('users.role.detach');
