@@ -8,6 +8,7 @@ use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\TenantFormRequest;
 
+
 class CategoryApiController extends Controller
 {
     protected $categoryService;
@@ -21,10 +22,19 @@ class CategoryApiController extends Controller
     {
         // if (!$request->token_company) {
         //    return response()->json(['message' => 'Token não foi encontrado'], 404);
-        //}
+        //}=
 
         $categories = $this->categoryService->getCategoriesByUuid($request->token_company);
 
        return CategoryResource::collection($categories);
+    }
+
+    public function show(TenantFormRequest $request, $url)
+    {
+        if (!$category = $this->categoryService->getCategoryByUrl($url)) {
+            return response()->json(['message' => 'Categoria não encontrada'], 404);
+        }
+
+        return new CategoryResource($category);
     }
 }
