@@ -3,34 +3,38 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\TenantFormRequest;
+use App\Http\Resources\TableResource;
+use App\Services\TableService;
 use Illuminate\Http\Request;
 
 class TableApiController extends Controller
 {
-    protected $categoryService;
+    protected $tableService;
 
-    public function __construct(TableService $categoryService)
+    public function __construct(TableService $tableService)
     {
-        $this->categoryService = $categoryService;
+        $this->tableService = $tableService;
     }
 
     public function tablesByTenant(TenantFormRequest $request)
     {
         // if (!$request->token_company) {
-        //    return response()->json(['message' => 'Token não foi encontrado'], 404);
-        //}=
+        //     return response()->json(['message' => 'Token Not Found'], 404);
+        // }
 
-        $categories = $this->categoryService->getCategoriesByUuid($request->token_company);
+        $categories = $this->tableService->getTablesByUuid($request->token_company);
 
-       return TableResource::collection($categories);
+        return TableResource::collection($categories);
     }
 
-    public function show(TenantFormRequest $request, $url)
+
+    public function show(TenantFormRequest $request, $identify)
     {
-        if (!$category = $this->categoryService->getTableByUrl($url)) {
-            return response()->json(['message' => 'Categoria não encontrada'], 404);
+        if (!$table = $this->tableService->getTableByUrl($identify)) {
+            return response()->json(['message' => 'Table Not Found'], 404);
         }
 
-        return new TableResource($category);
+        return new TableResource($table);
     }
 }

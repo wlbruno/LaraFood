@@ -3,17 +3,17 @@
 namespace App\Services;
 
 use App\Repositories\Contracts\TableRepositoryInterface;
-use App\Repositories\Contracts\CategoryRepositoryInterface;
+use App\Repositories\Contracts\TenantRepositoryInterface;
 
 class TableService
 {
-    protected $tenantRepository, $table;
+    protected $table, $tenantRepository;
 
     public function __construct(
-        TableRepositoryInterface $tenantRepository,
-        CategoryRepositoryInterface $table
+        TableRepositoryInterface $table,
+        TenantRepositoryInterface $tenantRepository
     ) {
-        $this->table$table = $table;
+        $this->table = $table;
         $this->tenantRepository = $tenantRepository;
     }
 
@@ -21,11 +21,11 @@ class TableService
     {
         $tenant = $this->tenantRepository->getTenantByUuid($uuid);
 
-        return $this->table$table->getTablesByTenantId($tenant->id);
+        return $this->table->getTablesByTenantId($tenant->id);
     }
 
-    public function getTableByUrl(string $url)
+    public function getTableByUrl(string $identify)
     {
-        return $this->table$table->getTableByUrl($url);
+        return $this->table->getTableByidentify($identify);
     }
 }
